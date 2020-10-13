@@ -1,4 +1,5 @@
-Retrofit Parameters
+<i>Retrofit Parameters</i></p>
+
 <b>@Path</b> – variable substitution for the API endpoint. For example movie id will be swapped for{id} in the URL endpoint.
 
 <b>@Query</b> – specifies the query key name with the value of the annotated parameter.
