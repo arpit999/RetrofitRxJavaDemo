@@ -1,11 +1,11 @@
 
-@Path – variable substitution for the API endpoint. For example movie id will be swapped for{id} in the URL endpoint.
+<b>@Path</b> – variable substitution for the API endpoint. For example movie id will be swapped for{id} in the URL endpoint.
 
-@Query – specifies the query key name with the value of the annotated parameter.
+<b>@Query</b> – specifies the query key name with the value of the annotated parameter.
 
-@Body – payload for the POST call
+<b>@Body</b> – payload for the POST call
 
-@Header – specifies the header with the value of the annotated parameter
+<b>@Header</b> – specifies the header with the value of the annotated parameter
 
 
 API TO GET MOVIE : http://api.themoviedb.org/3/movie/top_rated?api_key=2b054de6d61b4c4e590162f41c45bd80
