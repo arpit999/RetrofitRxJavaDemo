@@ -11,6 +11,22 @@
 
 <img src="https://github.com/arpit999/Images/blob/master/RetrofitRxJavaDemo.png" alt="Retrofit RxJava Demo">
 
+
+<p>RxJava is all about two key components: <strong>Observable</strong> and <strong>Observer</strong>. In addition to these, there are other things like <strong>Schedulers</strong>, <strong>Operators</strong> and <strong>Subscription</strong>.</p>
+
+<p><em>Observable:</em> Observable is a data stream that do some work and emits data.</p>
+<p><em>Observer:</em> Observer is the counter part of Observable. It receives the data emitted by Observable.</p>
+<p><em>Subscription:</em> The bonding between Observable and Observer is called as Subscription. There can be multiple Observers subscribed to a single Observable.</p>
+<p><em>Operator / Transformation:</em> Operators modifies the data emitted by Observable before an observer receives them.</p>
+<p><em>Schedulers:</em> Schedulers decides the thread on which Observable should emit the data and on which Observer should receives the data i.e background thread, main thread etc.,</p>
+
+<p> Observer provides the below interface methods to know the the state of Observable.</p>
+<ul>
+<li><strong>onSubscribe():</strong> Method will be called when an Observer subscribes to Observable.</li>
+<li><strong>onNext():</strong> This method will be called when Observable starts emitting the data.</li>
+<li><strong>onError():</strong> In case of any error, onError() method will be called.</li>
+<li><strong>onComplete():</strong> When an Observable completes the emission of all the items, onComplete() will be called.</li>
+</ul>
 <i>Below are the list of schedulers available and their brief introduction.<i>
 
 <b>Schedulers.io()</b> – This is used to perform non CPU-intensive operations like making network calls, reading disc / files, database operations etc., This maintains pool of threads.
