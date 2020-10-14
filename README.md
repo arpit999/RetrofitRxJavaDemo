@@ -9,7 +9,7 @@
 <b>@Header</b> – specifies the header with the value of the annotated parameter
 
 
-<img src="https://github.com/arpit999/Images/blob/master/RetrofitRxJavaDemo.png" alt="Retrofit RxJava Demo" width="500" height="600">
+<img src="https://github.com/arpit999/Images/blob/master/RetrofitRxJavaDemo.png" alt="Retrofit RxJava Demo">
 
 
 API TO GET MOVIE : http://api.themoviedb.org/3/movie/top_rated?api_key=2b054de6d61b4c4e590162f41c45bd80
