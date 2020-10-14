@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     List<Language> languageList;
 
     int item = 4;
-
+r
     ImageView image;
     TextView title, subtitle, description, rating, release_date, language;
 
