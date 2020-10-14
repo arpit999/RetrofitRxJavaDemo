@@ -15,7 +15,18 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Observer;
+import io.reactivex.Scheduler;
+import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -30,10 +41,12 @@ public class MainActivity extends AppCompatActivity {
     List<Movie> movies;
     List<Language> languageList;
 
-    int item = 1;
+    int item = 4;
 
     ImageView image;
     TextView title, subtitle, description, rating, release_date, language;
+
+    private Disposable disposable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +64,37 @@ public class MainActivity extends AppCompatActivity {
 
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
 
-        Call<MovieResopnse> call = apiInterface.getTopRatedMovie(API_KEY);
-        final Call<List<Language>> callLanguage = apiInterface.getLanguages(API_KEY);
+        Single<MovieResopnse> movieResopnseSingle = apiInterface.getTopRatedMovie(API_KEY);
 
+        apiInterface.getTopRatedMovie(API_KEY)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<MovieResopnse>() {
+                    @Override
+                    public void onSuccess(@NonNull MovieResopnse movieResopnse) {
+                        movies = movieResopnse.getResults();
+                        Log.d(TAG, "onResponse: Number of movies received: " + movies.size());
+
+                        Picasso.get()
+                                .load(IMAGE_URL + movies.get(item).getPosterPath())
+                                .into(image);
+
+                        title.setText(movies.get(item).getOriginalTitle());
+                        subtitle.setText(movies.get(item).getTitle());
+                        description.setText(movies.get(item).getOverview());
+                        rating.setText("" + movies.get(item).getVoteAverage());
+                        release_date.setText("Release: " + movies.get(item).getReleaseDate());
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+                    }
+                });
+
+      /*  final Call<List<Language>> callLanguage = apiInterface.getLanguages(API_KEY);
+
+        Call<MovieResopnse> call = apiInterface.getTopRatedMovie(API_KEY);
         call.enqueue(new Callback<MovieResopnse>() {
             @Override
             public void onResponse(Call<MovieResopnse> call, Response<MovieResopnse> response) {
@@ -106,9 +147,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "onFailure: request url : " + call.request().url().toString());
 
             }
-        });
-
-
+        });*/
 
 
     }
