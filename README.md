@@ -45,6 +45,41 @@
 
 <b>Schedulers.from()</b> – This allows us to create a scheduler from an executor by limiting number of threads to be created. When thread pool is occupied, tasks will be queued.
 
+All Observables varies from one another in the number of emission it makes. The below table describes each Observable, its Observer and number of emissions.
+
+<table>
+  <tr>
+    <th>Observable</th>
+    <th>Observer</th>
+    <th># of emissions</th>
+  </tr>
+  <tr>
+    <td>Observable</td>
+    <td>Observer</td>
+    <td>Multiple or None</td>
+  </tr>
+  <tr>
+    <td>Single</td>
+    <td>SingleObserver</td>
+    <td>One</td>
+  </tr>
+  <tr>
+    <td>Maybe</td>
+    <td>MaybeObserver</td>
+    <td>One or None</td>
+  </tr>
+  <tr>
+    <td>Flowable</td>
+    <td>Observer</td>
+    <td>Multiple or None</td>
+  </tr>
+  <tr>
+    <td>Completable</td>
+    <td>CompletableObserver</td>
+    <td>None</td>
+  </tr>
+  
+</table>
 
 API TO GET MOVIE : http://api.themoviedb.org/3/movie/top_rated?api_key=2b054de6d61b4c4e590162f41c45bd80
 
