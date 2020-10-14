@@ -14,11 +14,11 @@
 
 <p>RxJava is all about two key components: <strong>Observable</strong> and <strong>Observer</strong>. In addition to these, there are other things like <strong>Schedulers</strong>, <strong>Operators</strong> and <strong>Subscription</strong>.</p>
 
-<p><em>Observable:</em> Observable is a data stream that do some work and emits data.</p>
-<p><em>Observer:</em> Observer is the counter part of Observable. It receives the data emitted by Observable.</p>
-<p><em>Subscription:</em> The bonding between Observable and Observer is called as Subscription. There can be multiple Observers subscribed to a single Observable.</p>
-<p><em>Operator / Transformation:</em> Operators modifies the data emitted by Observable before an observer receives them.</p>
-<p><em>Schedulers:</em> Schedulers decides the thread on which Observable should emit the data and on which Observer should receives the data i.e background thread, main thread etc.,</p>
+<p><b><em>Observable:</em></b> Observable is a data stream that do some work and emits data.</p>
+<p><b><em>Observer:</em></b> Observer is the counter part of Observable. It receives the data emitted by Observable.</p>
+<p><b><em>Subscription:</em></b> The bonding between Observable and Observer is called as Subscription. There can be multiple Observers subscribed to a single Observable.</p>
+<p><b><em>Operator / Transformation:</em></b> Operators modifies the data emitted by Observable before an observer receives them.</p>
+<p><b><em>Schedulers:</em></b> Schedulers decides the thread on which Observable should emit the data and on which Observer should receives the data i.e background thread, main thread etc.,</p>
 
 <p> Observer provides the below interface methods to know the the state of Observable.</p>
 <ul>
