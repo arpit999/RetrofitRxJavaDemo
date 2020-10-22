@@ -7,6 +7,7 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.example.retrofitrxjavademo.model.Language;
 import com.example.retrofitrxjavademo.model.Movie;
@@ -18,13 +19,14 @@ import java.util.List;
 import java.util.Timer;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Observable;
 import io.reactivex.Observer;
-import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
@@ -41,12 +43,13 @@ public class MainActivity extends AppCompatActivity {
     List<Movie> movies;
     List<Language> languageList;
 
-    int item = 4;
-r
-    ImageView image;
-    TextView title, subtitle, description, rating, release_date, language;
+    int item = 1;
+    int count = 1;
 
-    private Disposable disposable;
+    ImageView image;
+    TextView title, subtitle, description, rating, release_date, language, tv_count;
+
+    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +58,8 @@ r
 
         image = findViewById(R.id.image);
 
+        tv_count = findViewById(R.id.tv_count);
+
         title = findViewById(R.id.title);
         subtitle = findViewById(R.id.subtitle);
         description = findViewById(R.id.description);
@@ -62,19 +67,25 @@ r
         release_date = findViewById(R.id.release_date);
         language = findViewById(R.id.language);
 
+        tv_count.setText("Movie: " + item);
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
 
-        Single<MovieResopnse> movieResopnseSingle = apiInterface.getTopRatedMovie(API_KEY);
-
-        apiInterface.getTopRatedMovie(API_KEY)
+        compositeDisposable.add(Observable.interval(2, TimeUnit.SECONDS)
+                .flatMap(n -> apiInterface.getTopRatedMovie(API_KEY))
+                .repeat()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSingleObserver<MovieResopnse>() {
+                .subscribe(new Consumer<MovieResopnse>() {
                     @Override
-                    public void onSuccess(@NonNull MovieResopnse movieResopnse) {
+                    public void accept(MovieResopnse movieResopnse) throws Exception {
                         movies = movieResopnse.getResults();
                         Log.d(TAG, "onResponse: Number of movies received: " + movies.size());
 
+                        if (item == 19)
+                            item = 1;
+
+                        tv_count.setText("Movie: " + item);
+                        item++;
                         Picasso.get()
                                 .load(IMAGE_URL + movies.get(item).getPosterPath())
                                 .into(image);
@@ -85,12 +96,8 @@ r
                         rating.setText("" + movies.get(item).getVoteAverage());
                         release_date.setText("Release: " + movies.get(item).getReleaseDate());
                     }
+                }, this::onError));
 
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-
-                    }
-                });
 
       /*  final Call<List<Language>> callLanguage = apiInterface.getLanguages(API_KEY);
 
@@ -150,5 +157,16 @@ r
         });*/
 
 
+    }
+
+    private void onError(Throwable throwable) {
+        Toast.makeText(this, "Error: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "onError: " + throwable.getMessage());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.clear();
     }
 }

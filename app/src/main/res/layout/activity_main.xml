@@ -39,6 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
                 android:layout_margin="8dp"
+                android:marqueeRepeatLimit="marquee_forever"
                 android:text="abriel's Inferno Part II"
                 android:textColor="@color/colorBlack"
                 android:textSize="16sp"
@@ -128,6 +129,20 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/tv_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif-condensed"
+        android:textSize="30sp"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
